@@ -15,7 +15,7 @@ def render_star_chart_page():
 
 def run_star_chart_spherical_projection(hemisphere, yearProperMotion, displayStarName, displayDeclinationNum, includePrecession, incrementValue):
 	import star_chart_spherical_projection
-	plot_url = "static/star_chart_output.png"
+	plot_star_chart_url = "static/star_chart_output.png"
 	star_chart_spherical_projection.plotStereographicProjection(northOrSouth=hemisphere,
 																yearSince2000=yearProperMotion,
 																displayStarNamesLabels=displayStarName,
@@ -24,8 +24,8 @@ def run_star_chart_spherical_projection(hemisphere, yearProperMotion, displaySta
 																incrementBy=incrementValue,
 																figsize_dpi=150,
 																showPlot=False,
-																save_plot_name=plot_url)
-	return plot_url
+																save_plot_name=plot_star_chart_url)
+	return plot_star_chart_url
 
 @app.route('/star-chart-spherical-projection-results', methods=["POST"])
 def render_star_chart_results():
@@ -36,9 +36,9 @@ def render_star_chart_results():
 	includePrecession = bool(request.form.getlist("includePrecession"))
 	incrementValue = int(request.form["incrementValue"])
 
-	plot_url = run_star_chart_spherical_projection(hemisphere, yearProperMotion, displayStarName, displayDeclinationNum, includePrecession, incrementValue)
+	plot_star_chart_url = run_star_chart_spherical_projection(hemisphere, yearProperMotion, displayStarName, displayDeclinationNum, includePrecession, incrementValue)
 
-	return render_template('star_chart_spherical_projection_results.html', plot_url=plot_url)
+	return render_template('star_chart_spherical_projection_results.html', plot_star_chart_url=plot_star_chart_url)
 
 ## muller-eot
 @app.route('/muller-eot', methods=["GET"])
@@ -47,18 +47,21 @@ def render_eot_page():
 
 def run_muller_eot(eccentricity, obliquity, orbitalPeriod):
 	import muller_eot
+	plot_eot_url = "static/eot_chart_output.png"
 	# Combined Effect of Obliquity and Eccentricity
 	orbital_period_planet = muller_eot.calculateOrbitalPeriod(orbitalPeriod)
 	eot_combined_y = muller_eot.calculateDifferenceEOTMinutes(eccentricity=eccentricity,
 															obliquity_deg=obliquity,
 															orbit_period=orbital_period_planet)
-	'''
 	muller_eot.plotEOT(planet_name="Earth",
-						orbital_period=orbitalPeriod,
+						orbital_period=orbital_period_planet,
 						eot_y=eot_combined_y,
-						effect_title_str="Eccentricity ({0}) and Obliquity ({1})".format(earthEccentricity, earthObliquity))
-	'''
-	return eot_combined_y
+						effect_title_str="Eccentricity ({0}) and Obliquity ({1})".format(eccentricity, obliquity),
+						figsize_dpi=150,
+						showPlot=False,
+						save_plot_name=plot_eot_url)
+
+	return plot_eot_url
 
 @app.route('/muller-eot-results', methods=["POST"])
 def render_eot_results():
@@ -70,11 +73,11 @@ def render_eot_results():
 				"obliquity" : obliquity,
 				"orbitalPeriod": orbitalPeriod}
 
-	eot_output_y = run_muller_eot(eccentricity, obliquity, orbitalPeriod)
+	plot_eot_url = run_muller_eot(eccentricity, obliquity, orbitalPeriod)
 
 	return render_template('muller_eot_results.html',
 							eot_data=eot_data,
-							output_results=eot_output_y)
+							plot_eot_url=plot_eot_url)
 
 # flask app only runs once to avoid running more than once
 if __name__ == "__main__":
