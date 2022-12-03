@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<Title>Star Chart</Title>
+		<link rel="stylesheet" type="text/css" href= "static/styles/home_page.css">
 	</head>
 	<body>
 		<h2><a href="/home">Home</a></h2>
@@ -9,36 +10,36 @@
 		<h3>Options:</h3>
 		<form class="starChartText" id="starChartForm" action="{{ url_for('render_star_chart_results') }}" method="post">
 
-			<label for="hemisphere">Select Hemisphere for Projection:</label>
-			<select id="hemisphere" name="hemisphere">
-				<option value="north">North</option>
-				<option value="south">South</option>
-			</select>
-			<br>
+			<label for="hemisphere">Select Hemisphere for Projection:
+				<select id="hemisphere" name="hemisphere">
+					<option value="north">North</option>
+					<option value="south">South</option>
+				</select>
+			</label>
 
-			<label for="yearProperMotion">Select a Year to Calculate:</label>
-			<input type="number" id="yearProperMotion" name="yearProperMotion" min=-150000 max=150000 step=0.0000000001 value=-31>
-			<br>
+			<label for="yearProperMotion">Select a Year to Calculate:
+				<input type="number" id="yearProperMotion" name="yearProperMotion" min=-150000 max=150000 step=0.0000000001 value=-31>
+			</label>
 
-			<label for="displayStarName">Display Star Names:</label>
-			<input type="checkbox" id="displayStarName" name="displayStarName" value="False">
-			<br>
+			<label for="displayStarName">Display Star Names:
+				<input type="checkbox" id="displayStarName" name="displayStarName" value="False">
+			</label>
 
-			<label for="displayDeclinationNum">Display Declination Numbers:</label>
-			<input type="checkbox" id="displayDeclinationNum" name="displayDeclinationNum" value="True" checked>
-			<br>
+			<label for="displayDeclinationNum">Display Declination Numbers:
+				<input type="checkbox" id="displayDeclinationNum" name="displayDeclinationNum" value="True" checked>
+			</label>
 
-			<label for="includePrecession">Include Precession:</label>
+			<label for="includePrecession">Include Precession:
 			<input type="checkbox" id="includePrecession" name="includePrecession" value="True" checked>
-			<br>
+			</label>
 
-			<label for="incrementValue">Increment Declination by:</label>
-			<select id="incrementValue" name="incrementValue">
-				<option value="10">10</option>
-				<option value="5">5</option>
-				<option value="1">1</option>
-			</select>
-			<br>
+			<label for="incrementValue">Increment Declination by:
+				<select id="incrementValue" name="incrementValue">
+					<option value="10">10</option>
+					<option value="5">5</option>
+					<option value="1">1</option>
+				</select>
+			</label>
 
 			<input class="starChartText" id="starChartSubmit" type="submit" value="Submit">
 		</form>

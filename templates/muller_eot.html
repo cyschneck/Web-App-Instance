@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<Title>Muller-EOT</Title>
+		<link rel="stylesheet" type="text/css" href= "static/styles/home_page.css">
 	</head>
 	<body>
 		<h2><a href="/home">Home</a></h2>
@@ -10,15 +11,17 @@
 
 		<form class="eotText" id="eotForm" action="{{ url_for('render_eot_results') }}" method="post">
 
-			<label for="eccentricity">Eccentricity:</label>
+			<label for="eccentricity">Eccentricity:
 			<input type="number" id="eccentricity" name="eccentricity" min=0 max=1 step=0.0000000001 value=0.01671022>
-			<br>
-			<label for="obliquity">Obliquity (Degrees):</label>
+			</label>
+
+			<label for="obliquity">Obliquity (Degrees):
 			<input type="number" id="obliquity" name="obliquity" min=0 max=89.9 step=0.0000000001 value=23.4367>
-			<br>
-			<label for="orbitalPeriod">Orbital Period (AU):</label>
+			</label>
+
+			<label for="orbitalPeriod">Orbital Period (AU):
 			<input type="number" id="orbitalPeriod" name="orbitalPeriod" min=0 max=32 step=0.0000000001 value=1.0000001124>
-			<br>
+			</label>
 
 			<input class="eotText" id="eotSubmit" type="submit" value="Submit">
 		</form>
