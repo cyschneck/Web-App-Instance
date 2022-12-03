@@ -3,6 +3,22 @@
 		<Title>Equation of Time: Muller-EOT</Title>
 	</head>
 	<body>
-		<h2>Generate Graphs for the Equation of Time based on arbitary obliquity and eccentricity</h2>
+		<h2>Generate Graphs for the Equation of Time</h2>
+		<p>Based on arbitary obliquity and eccentricity</p>
+
+		<form class="eotText" id="eotForm" action="{{ url_for('render_eot_page') }}" method="post">
+
+			<label for="eccentricity">Eccentricity:</label>
+			<input type="number" id="eccentricity" name="eccentricity" min=0 max=1 step=0.0000000001 value=0.01671022>
+			<br>
+			<label for="obliquity">Obliquity (Degrees):</label>
+			<input type="number" id="obliquity" name="obliquity" min=0 max=89.9 step=0.0000000001 value=23.4367>
+			<br>
+			<label for="orbitalPeriod">Orbital Period (AU):</label>
+			<input type="number" id="orbitalPeriod" name="orbitalPeriod" min=0 max=32 step=0.0000000001 value=1.0000001124>
+			<br>
+
+			<input class="eotText" id="eotSubmit" type="submit" value="Submit">
+		</form>
 	</body>
 </html>
