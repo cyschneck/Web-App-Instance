@@ -15,12 +15,16 @@ def render_star_chart_page():
 
 def run_star_chart_spherical_projection(hemisphere, yearProperMotion, displayStarName, displayDeclinationNum, includePrecession, incrementValue):
 	import star_chart_spherical_projection
-	return star_chart_spherical_projection.plotStereographicProjection(northOrSouth=hemisphere,
-																	yearSince2000=yearProperMotion,
-																	displayStarNamesLabels=displayStarName,
-																	displayDeclinationNumbers=displayDeclinationNum,
-																	isPrecessionIncluded=includePrecession,
-																	incrementBy=incrementValue)
+	plot_url = "static/star_chart_output.png"
+	star_chart_spherical_projection.plotStereographicProjection(northOrSouth=hemisphere,
+																yearSince2000=yearProperMotion,
+																displayStarNamesLabels=displayStarName,
+																displayDeclinationNumbers=displayDeclinationNum,
+																isPrecessionIncluded=includePrecession,
+																incrementBy=incrementValue,
+																showPlot=False,
+																save_plot_name=plot_url)
+	return plot_url
 
 @app.route('/star-chart-spherical-projection-results', methods=["POST"])
 def render_star_chart_results():
@@ -31,9 +35,9 @@ def render_star_chart_results():
 	includePrecession = bool(request.form.getlist("includePrecession"))
 	incrementValue = int(request.form["incrementValue"])
 
-	plot = run_star_chart_spherical_projection(hemisphere, yearProperMotion, displayStarName, displayDeclinationNum, includePrecession, incrementValue)
+	plot_url = run_star_chart_spherical_projection(hemisphere, yearProperMotion, displayStarName, displayDeclinationNum, includePrecession, incrementValue)
 
-	return render_template('star_chart_spherical_projection_results.html', plot=plot)
+	return render_template('star_chart_spherical_projection_results.html', plot_url=plot_url)
 
 ## muller-eot
 @app.route('/muller-eot', methods=["GET"])
