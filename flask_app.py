@@ -69,15 +69,9 @@ def render_eot_results():
 	obliquity = float(request.form["obliquity"])
 	orbitalPeriod = float(request.form["orbitalPeriod"])
 
-	eot_data = { "eccentricity" : eccentricity,
-				"obliquity" : obliquity,
-				"orbitalPeriod": orbitalPeriod}
-
 	plot_eot_url = run_muller_eot(eccentricity, obliquity, orbitalPeriod)
 
-	return render_template('muller_eot_results.html',
-							eot_data=eot_data,
-							plot_eot_url=plot_eot_url)
+	return render_template('muller_eot_results.html', plot_eot_url=plot_eot_url)
 
 # flask app only runs once to avoid running more than once
 if __name__ == "__main__":
