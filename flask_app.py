@@ -22,6 +22,7 @@ def run_star_chart_spherical_projection(hemisphere, yearProperMotion, displaySta
 																displayDeclinationNumbers=displayDeclinationNum,
 																isPrecessionIncluded=includePrecession,
 																incrementBy=incrementValue,
+																figsize_dpi=150,
 																showPlot=False,
 																save_plot_name=plot_url)
 	return plot_url
