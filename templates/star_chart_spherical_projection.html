@@ -3,9 +3,10 @@
 		<Title>Star Chart: star-chart-spherical-projection</Title>
 	</head>
 	<body>
+		<h2><a href="/">Home</a></h2>
 		<h2>Generate Star Chart</h2>
 		<p>Options:</p>
-		<form class="starChartText" id="starChartForm" action="{{ url_for('render_star_chart_page') }}" method="post">
+		<form class="starChartText" id="starChartForm" action="{{ url_for('render_star_chart_results') }}" method="post">
 
 			<label for="hemisphere">Select Hemisphere for Projection:</label>
 			<select id="hemisphere" name="hemisphere">
