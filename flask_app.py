@@ -50,18 +50,17 @@ def run_muller_eot(eccentricity, obliquity, orbitalPeriod):
 	plot_eot_url = "static/eot_chart_output.png"
 	# Combined Effect of Obliquity and Eccentricity
 	orbital_period_planet = muller_eot.calculateOrbitalPeriod(orbitalPeriod)
-	eot_combined_y = muller_eot.calculateDifferenceEOTMinutes(eccentricity=eccentricity,
+	eot_diff_dict = muller_eot.calculateDifferenceEOTMinutes(eccentricity=eccentricity,
 															obliquity_deg=obliquity,
 															orbit_period=orbital_period_planet)
 	muller_eot.plotEOT(planet_name="Earth",
-						orbital_period=orbital_period_planet,
-						eot_y=eot_combined_y,
+						eot_dict=eot_diff_dict,
 						effect_title_str="Eccentricity ({0}) and Obliquity ({1})".format(eccentricity, obliquity),
 						figsize_dpi=150,
 						showPlot=False,
 						save_plot_name=plot_eot_url)
 
-	return plot_eot_url
+	return plot_eot_url, eot_diff_dict
 
 @app.route('/muller-eot-results', methods=["POST"])
 def render_eot_results():
@@ -69,9 +68,9 @@ def render_eot_results():
 	obliquity = float(request.form["obliquity"])
 	orbitalPeriod = float(request.form["orbitalPeriod"])
 
-	plot_eot_url = run_muller_eot(eccentricity, obliquity, orbitalPeriod)
+	plot_eot_url, eot_dict = run_muller_eot(eccentricity, obliquity, orbitalPeriod)
 
-	return render_template('muller_eot_results.html', plot_eot_url=plot_eot_url)
+	return render_template('muller_eot_results.html', plot_eot_url=plot_eot_url, eot_dict=eot_dict)
 
 # flask app only runs once to avoid running more than once
 if __name__ == "__main__":

@@ -5,8 +5,29 @@
 		<link rel="stylesheet" type="text/css" href= "static/styles/home_page.css">
 	</head>
 	<body>
-		<h2><a href="./muller-eot">Back</a></h2>
-		<h3>Muller EOT Results</h3>
-		<img src={{ plot_eot_url }} alt="EOT-Chart">
+
+	<h2><a href="./muller-eot">Back</a></h2>
+
+	<img src={{ plot_eot_url }} alt="EOT-Equation" width=70%>
+
+	<p>To calculate the difference in time for an individual day (Müller, 1995): Equation 45</p>
+	<img src="https://user-images.githubusercontent.com/22159116/203877814-c2d710f3-0681-4f72-8607-0f96e2a33256.png" alt="EOT-Chart">
+	<table id="eot">
+	  <thead>
+		<tr>
+			<th>Orbital Days</th>
+			<th>EOT Difference in Time (Minutes)</th>
+		</tr>
+	  </thead>
+	  <tbody>
+	  {% for key, value in eot_dict.items() %}
+	   <tr>
+			<td> {{ key }} </td>
+			<td> {{ value }} </td>
+	   </tr>
+	  {% endfor %}
+	  </tbody>
+	</table>
+
 	</body>
 </html>

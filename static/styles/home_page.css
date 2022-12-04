@@ -21,3 +21,24 @@ label {
 	display: block;
 	margin-bottom: 20px;
 }
+
+code {
+	background-color: #eee;
+	border: 1px solid #999;
+	display: block;
+	padding: 20px;
+}
+
+table, th, td {
+	border:1px solid black;
+	padding: 8px;
+	text-align: left;
+}
+
+#eot tr:hover {
+	background-color: #ddd;
+}
+
+a:link, a:visited, a:active {
+	color: blue;
+}
