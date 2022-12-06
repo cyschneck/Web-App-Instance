@@ -42,3 +42,23 @@ table, th, td {
 a:link, a:visited, a:active {
 	color: blue;
 }
+
+
+/*Muller Results*/
+.column {
+  float: left;
+}
+
+.left {
+  width: 75%;
+}
+
+.right {
+  width: 25%;
+}
+
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+  }
+}

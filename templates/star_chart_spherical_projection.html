@@ -10,14 +10,14 @@
 		<h4>Options:</h4>
 		<form class="starChartText" id="starChartForm" action="{{ url_for('render_star_chart_results') }}" method="post">
 
-			<label for="hemisphere">Select Hemisphere for Projection:
+			<label for="hemisphere">Select Hemisphere (North centered on +90°, South centered on -90):
 				<select id="hemisphere" name="hemisphere">
 					<option value="north">North</option>
 					<option value="south">South</option>
 				</select>
 			</label>
 
-			<label for="yearProperMotion">Select a Year to Calculate:
+			<label for="yearProperMotion">Year Difference from 2000 (i.e. -31 = 1969):
 				<input type="number" id="yearProperMotion" name="yearProperMotion" min=-150000 max=150000 step=0.0000000001 value=-31>
 			</label>
 
@@ -29,15 +29,15 @@
 				<input type="checkbox" id="displayDeclinationNum" name="displayDeclinationNum" value="True" checked>
 			</label>
 
-			<label for="includePrecession">Include Precession:
+			<label for="includePrecession">Include Precession of the Equinoxes:
 			<input type="checkbox" id="includePrecession" name="includePrecession" value="True" checked>
 			</label>
 
 			<label for="incrementValue">Increment Declination by:
 				<select id="incrementValue" name="incrementValue">
-					<option value="10">10</option>
-					<option value="5">5</option>
-					<option value="1">1</option>
+					<option value="10">10°</option>
+					<option value="5">5°</option>
+					<option value="1">1°</option>
 				</select>
 			</label>
 
