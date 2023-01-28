@@ -14,7 +14,9 @@ python3 flask_app.py
 
 ## PyPi Packages as Web Apps
 
-Generate a star chart: [star-chart-spherical-projection](https://pypi.org/project/star-chart-spherical-projection/)
+### Generate a Star Chart
+
+[star-chart-spherical-projection](https://pypi.org/project/star-chart-spherical-projection/)
 
 Options:
 - Select Hemisphere (North centered on +90°, South centered on -90): North or South
@@ -29,7 +31,9 @@ Options:
 Output includes: A star chart and a list of all the final positions of stars (declination, right ascension)
 ![star_chart](https://raw.githubusercontent.com/cyschneck/Web-App-Instance/main/static/star_chart_output.png)
 
-Generate Graphs for the Equation of Time: [muller-eot](https://pypi.org/project/muller-eot/)
+### Generate Graphs for the Equation of Time
+
+[muller-eot](https://pypi.org/project/muller-eot/)
 
 Options:
 - Eccentricity: 0.01671022
@@ -39,3 +43,6 @@ Options:
 **Example Output**
 Output includes: A EOT graph with a list of the difference in time for each day in the year
 ![effect_eot](https://raw.githubusercontent.com/cyschneck/Web-App-Instance/main/static/eot_chart_output.png)
+
+## TODO
+Fix absolute path link for png files being generated locally vs. pythonanywhere
