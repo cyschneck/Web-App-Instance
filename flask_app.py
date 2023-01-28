@@ -21,7 +21,7 @@ def run_star_chart_spherical_projection(hemisphere, yearProperMotion, displaySta
 	if "Dropbox" in os.getcwd(): # local
 		plot_star_chart_url =  "static/img/star_chart_output.png"
 		retrieve_url = plot_star_chart_url
-	if "mysite" in os.getcwd(): # pythonanywhere
+	else: # pythonanywhere
 		plot_star_chart_url = "/home/cyschneck/mysite/Web-App-Instance/static/img/star_chart_output.png"
 		retrieve_url = "https://cyschneck.pythonanywhere.com/static/img/star_chart_output.png"
 	final_position_of_stars_dict = star_chart_spherical_projection.finalPositionOfStars(userListOfStars=userListOfStars, 
@@ -64,7 +64,7 @@ def run_muller_eot(eccentricity, obliquity, orbitalPeriod):
 	if "Dropbox" in os.getcwd(): # local
 		plot_eot_url =  "static/img/eot_chart_output.png"
 		retrieve_url = plot_eot_url
-	if "mysite" in os.getcwd(): # pythonanywhere
+	else: # pythonanywhere
 		plot_eot_url = "/home/cyschneck/mysite/Web-App-Instance/static/img/eot_chart_output.png"
 		retrieve_url = "https://cyschneck.pythonanywhere.com/static/img/eot_chart_output.png"
 	# Combined Effect of Obliquity and Eccentricity
