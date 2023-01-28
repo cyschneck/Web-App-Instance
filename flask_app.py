@@ -18,7 +18,7 @@ def render_star_chart_page():
 def run_star_chart_spherical_projection(hemisphere, yearProperMotion, displayStarName, displayDeclinationNum, includePrecession, incrementValue, userListOfStars):
 	import star_chart_spherical_projection
 	# TODO: fix abs path, this currently works with pythonanywhere
-	plot_star_chart_url = "https://cyschneck.pythonanywhere.com/static/img/star_chart_output.png" # "static/img/star_chart_output.png"
+	plot_star_chart_url = "/home/cyschneck/mysite/Web-App-Instance/static/img/star_chart_output.png" # "static/img/star_chart_output.png"
 	final_position_of_stars_dict = star_chart_spherical_projection.finalPositionOfStars(userListOfStars=userListOfStars, 
 																						yearSince2000=yearProperMotion,
 																						isPrecessionIncluded=includePrecession)
@@ -56,7 +56,7 @@ def render_eot_page():
 def run_muller_eot(eccentricity, obliquity, orbitalPeriod):
 	import muller_eot
 	# TODO: fix abs path, this currently works with pythonanywhere
-	plot_eot_url = "https://cyschneck.pythonanywhere.com/static/img/eot_chart_output.png" #"static/img/eot_chart_output.png"
+	plot_eot_url = "/home/cyschneck/mysite/Web-App-Instance/static/img/eot_chart_output.png" #"static/img/eot_chart_output.png"
 	# Combined Effect of Obliquity and Eccentricity
 	orbital_period_planet = muller_eot.calculateOrbitalPeriod(orbitalPeriod)
 	eot_diff_dict = muller_eot.calculateDifferenceEOTMinutes(eccentricity=eccentricity,
