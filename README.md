@@ -8,6 +8,10 @@ Web app instance of PyPi packages star-chart-spherical-projection and muller-eot
 python3 flask_app.py
 ```
 
+## PythonAnywhere Hosting
+
+[cyschneck.pythonanywhere.com](http://cyschneck.pythonanywhere.com/)
+
 ## PyPi Packages as Web Apps
 
 Generate a star chart: [star-chart-spherical-projection](https://pypi.org/project/star-chart-spherical-projection/)

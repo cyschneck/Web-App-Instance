@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<Title>Muller EOT: Results</Title>
-		<link rel="stylesheet" type="text/css" href= "static/styles/home_page.css">
+		<link rel="stylesheet" type="text/css" href= "{{url_for('static', filename='styles/home_page.css')}}">
 	</head>
 	<body>
 
@@ -10,7 +10,7 @@
 
 	<div class="row">
 	  <div class="column left">
-		<img src={{ plot_eot_url }} alt="EOT-Equation" width=100%>
+				<img src="{{url_for('static', filename='eot_chart_output.png')}}" width=100%>
 		<p>To calculate the difference in time for an individual day (Müller, 1995): Equation 45</p>
 		<img src="https://user-images.githubusercontent.com/22159116/203877814-c2d710f3-0681-4f72-8607-0f96e2a33256.png" alt="EOT-Chart">
 	  </div>

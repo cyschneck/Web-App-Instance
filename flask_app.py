@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+import os
 
 app = Flask(__name__, template_folder="templates")
 
@@ -41,7 +42,6 @@ def render_star_chart_results():
 	includePrecession = bool(request.form.getlist("includePrecession"))
 	incrementValue = int(request.form["incrementValue"])
 	userStarsValue = list(request.form.getlist('userStarsValue'))
-	print("userStarsValue = {0}".format(userStarsValue))
 
 	plot_star_chart_url, final_position_of_stars_dict = run_star_chart_spherical_projection(hemisphere, yearProperMotion, displayStarName, displayDeclinationNum, includePrecession, incrementValue, userStarsValue)
 
