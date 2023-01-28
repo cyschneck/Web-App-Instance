@@ -35,7 +35,7 @@ table, th, td {
 	text-align: left;
 }
 
-#eot tr:hover {
+tr:hover {
 	background-color: #ddd;
 }
 
@@ -43,8 +43,13 @@ a:link, a:visited, a:active {
 	color: blue;
 }
 
+#userStarValues {
+	width: 200px;
+	height: 1000px;
+}
 
-/*Muller Results*/
+
+/*Results*/
 .column {
   float: left;
 }

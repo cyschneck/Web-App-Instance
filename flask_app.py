@@ -14,13 +14,14 @@ def render_star_chart_page():
 	all_star_options = ['Acamar', 'Achernar', 'Acrab', 'Acrux', 'Adhara', 'Aldebaran', 'Alderamin', 'Algieba', 'Algol', 'Alhena', 'Alioth', 'Alkaid', 'Almach', 'Alnilam', 'Alnitak', 'Alphard', 'Alphecca', 'Alpheratz', 'Altair', 'Aludra', 'Ankaa', 'Antares', 'Arcturus', 'Arneb', 'Ascella', 'Aspidiske', 'Atria', 'Avior', 'Bellatrix', 'Beta Hydri', 'Beta Phoenicis', 'Betelgeuse', 'Canopus', 'Capella', 'Caph', 'Castor', 'Cebalrai', 'Celaeno', 'Chara', 'Cor-Caroli', 'Cursa', 'Delta Crucis', 'Deneb', 'Denebola', 'Diphda', 'Dschubba', 'Dubhe', 'Elnath', 'Eltanin', 'Enif', 'Formalhaut', 'Gacrux', 'Gamma Phoenicis', 'Gienah', 'Hadar', 'Hamal', 'Kochab', 'Kornephoros', 'Lesath', 'Markab', 'Megrez', 'Meissa', 'Menkalinan', 'Menkar', 'Menkent', 'Merak', 'Miaplacidus', 'Mimosa', 'Mintaka', 'Mirach', 'Mirfak', 'Mirzam', 'Mizar', 'Muphrid', 'Naos', 'Navi', 'Nunki', 'Peacock', 'Phact', 'Phecda', 'Polaris', 'Pollux', 'Procyon', 'Rasalhague', 'Rastaban', 'Regulus', 'Rigel', 'Ruchbah', 'Sabik', 'Sadr', 'Saiph', 'Sargas', 'Scheat', 'Schedar', 'Segin', 'Seginus', 'Shaula', 'Sheratan', 'Sirius', 'Spica', 'Suhail', 'Tarazed', 'Unukalhai', 'Vega', 'Wezen', 'Zosma', 'Zubeneschamali']
 	return render_template('star_chart_spherical_projection.html', all_star_options=all_star_options)
 
-def run_star_chart_spherical_projection(hemisphere, yearProperMotion, displayStarName, displayDeclinationNum, includePrecession, incrementValue, userStarsValue):
+def run_star_chart_spherical_projection(hemisphere, yearProperMotion, displayStarName, displayDeclinationNum, includePrecession, incrementValue, userListOfStars):
 	import star_chart_spherical_projection
 	plot_star_chart_url = "static/star_chart_output.png"
-	final_position_of_stars_dict = star_chart_spherical_projection.finalPositionOfStars(userListOfStars=userStarsValue, 
+	final_position_of_stars_dict = star_chart_spherical_projection.finalPositionOfStars(userListOfStars=userListOfStars, 
 																						yearSince2000=yearProperMotion,
 																						isPrecessionIncluded=includePrecession)
-	star_chart_spherical_projection.plotStereographicProjection(northOrSouth=hemisphere,
+	star_chart_spherical_projection.plotStereographicProjection(userListOfStars=userListOfStars,
+																northOrSouth=hemisphere,
 																yearSince2000=yearProperMotion,
 																displayStarNamesLabels=displayStarName,
 																displayDeclinationNumbers=displayDeclinationNum,
@@ -39,8 +40,8 @@ def render_star_chart_results():
 	displayDeclinationNum = bool(request.form.getlist("displayDeclinationNum"))
 	includePrecession = bool(request.form.getlist("includePrecession"))
 	incrementValue = int(request.form["incrementValue"])
-	userStarsValue = list(request.form.getlist('userStarsValue[]'))
-	print(userStarsValue)
+	userStarsValue = list(request.form.getlist('userStarsValue'))
+	print("userStarsValue = {0}".format(userStarsValue))
 
 	plot_star_chart_url, final_position_of_stars_dict = run_star_chart_spherical_projection(hemisphere, yearProperMotion, displayStarName, displayDeclinationNum, includePrecession, incrementValue, userStarsValue)
 

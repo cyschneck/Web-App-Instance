@@ -42,6 +42,7 @@
 			</label>
 
 			<label for="userStarsValue">Stars to be Included (by default includes all):
+				<br>
 				<select id="userStarValues" name="userStarsValue" method="GET" action="/" multiple>
 					{% for star in all_star_options %}
 						<option value="{{star}}" SELECTED>{{star}}</option>"
