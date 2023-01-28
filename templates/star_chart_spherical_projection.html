@@ -41,6 +41,15 @@
 				</select>
 			</label>
 
+			<label for="userStarsValue">Stars to be Included (by default includes all):
+				<select id="userStarValues" name="userStarsValue" method="GET" action="/" multiple>
+					{% for star in all_star_options %}
+						<option value="{{star}}" SELECTED>{{star}}</option>"
+					{% endfor %}
+				</select>
+				</select>
+			</label>
+
 			<input class="starChartText" id="starChartSubmit" type="submit" value="Submit">
 		</form>
 	</body>

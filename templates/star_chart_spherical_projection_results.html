@@ -6,6 +6,35 @@
 	</head>
 	<body>
 		<h2><a href="./star-chart-spherical-projection">Back</a></h2>
-		<img src={{ plot_star_chart_url }} alt="Star-Chart">
+
+		<div class="row">
+			<div class="column left">
+				<img src={{ plot_star_chart_url }} alt="Star-Chart" width=100%>
+			</div>
+	  
+			<div class="column right">
+				<table id="star-positions">
+					<thead>
+						<tr>
+						<h3>Final Position of Stars</h3>
+						<th>Star</th>
+						<th>Declination</th>
+						<th>Right Ascension</th>
+					</tr>
+				  </thead>
+				  <tbody>
+					{% for key, pos_value in final_position_of_stars_dict.items() %}
+					<tr>
+						<td> {{ key }} </td>
+						{% for key, value in pos_value.items() %}
+							<td> {{ value }} </td>
+						{% endfor %}
+				   </tr>
+				  {% endfor %}
+				  </tbody>
+				</table>
+			</div>
+		</div>
+
 	</body>
 </html>
