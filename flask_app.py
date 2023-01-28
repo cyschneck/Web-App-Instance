@@ -18,7 +18,12 @@ def render_star_chart_page():
 def run_star_chart_spherical_projection(hemisphere, yearProperMotion, displayStarName, displayDeclinationNum, includePrecession, incrementValue, userListOfStars):
 	import star_chart_spherical_projection
 	# TODO: fix abs path, this currently works with pythonanywhere
-	plot_star_chart_url = "/home/cyschneck/mysite/Web-App-Instance/static/img/star_chart_output.png" # "static/img/star_chart_output.png"
+	if "Dropbox" in os.getcwd(): # local
+		plot_star_chart_url =  "static/img/star_chart_output.png"
+		retrieve_url = plot_star_chart_url
+	if "mysite" in os.getcwd(): # pythonanywhere
+		plot_star_chart_url = "/home/cyschneck/mysite/Web-App-Instance/static/img/star_chart_output.png"
+		retrieve_url = "https://cyschneck.pythonanywhere.com/static/img/star_chart_output.png"
 	final_position_of_stars_dict = star_chart_spherical_projection.finalPositionOfStars(userListOfStars=userListOfStars, 
 																						yearSince2000=yearProperMotion,
 																						isPrecessionIncluded=includePrecession)
@@ -32,7 +37,7 @@ def run_star_chart_spherical_projection(hemisphere, yearProperMotion, displaySta
 																figsize_dpi=150,
 																showPlot=False,
 																save_plot_name=plot_star_chart_url)
-	return plot_star_chart_url, final_position_of_stars_dict
+	return retrieve_url, final_position_of_stars_dict
 
 @app.route('/star-chart-spherical-projection-results', methods=["POST"])
 def render_star_chart_results():
@@ -56,7 +61,12 @@ def render_eot_page():
 def run_muller_eot(eccentricity, obliquity, orbitalPeriod):
 	import muller_eot
 	# TODO: fix abs path, this currently works with pythonanywhere
-	plot_eot_url = "/home/cyschneck/mysite/Web-App-Instance/static/img/eot_chart_output.png" #"static/img/eot_chart_output.png"
+	if "Dropbox" in os.getcwd(): # local
+		plot_eot_url =  "static/img/eot_chart_output.png"
+		retrieve_url = plot_eot_url
+	if "mysite" in os.getcwd(): # pythonanywhere
+		plot_eot_url = "/home/cyschneck/mysite/Web-App-Instance/static/img/eot_chart_output.png"
+		retrieve_url = "https://cyschneck.pythonanywhere.com/static/img/eot_chart_output.png"
 	# Combined Effect of Obliquity and Eccentricity
 	orbital_period_planet = muller_eot.calculateOrbitalPeriod(orbitalPeriod)
 	eot_diff_dict = muller_eot.calculateDifferenceEOTMinutes(eccentricity=eccentricity,
@@ -69,7 +79,7 @@ def run_muller_eot(eccentricity, obliquity, orbitalPeriod):
 						showPlot=False,
 						save_plot_name=plot_eot_url)
 
-	return plot_eot_url, eot_diff_dict
+	return retrieve_url, eot_diff_dict
 
 @app.route('/muller-eot-results', methods=["POST"])
 def render_eot_results():
