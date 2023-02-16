@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<Title>Run Astrolabe Calculations</Title>
+		<link rel="stylesheet" type="text/css" href= "static/styles/home_page.css">
+	</head>
+	<body>
+		<h2><a href="/home">Home</a></h2>
+		<h2>Generate Base Plate</h2>
+		<h4>Options:</h4>
+
+		<form class="astrolabeBasePlateText" id="astrolabeBasePlateForm" action="{{ url_for('render_astrolabe_base_plate_results') }}" method="post">
+
+			<label for="obliquity">Obliquity (Degrees):
+			<input type="number" id="obliquity" name="obliquity" min=0 max=89.9 step=0.0000000001 value=23.4367>
+			</label>
+
+			<input class="astrolabeBasePlateText" id="astrolabeBasePlateSubmit" type="submit" value="Submit">
+		</form>
+
+		<h2>Generate Eccentric Calendar</h2>
+		<h4>Options:</h4>
+
+		<form class="astrolabeEccentricCalendarText" id="astrolabeEccentricCalendarForm" action="{{ url_for('render_astrolabe_eccentric_calendar_results') }}" method="post">
+
+			<label for="yearToCalculate">Year:
+			<input type="number" id="yearToCalculate" name="yearToCalculate" min=0 max=3000 step=1 value=2023>
+			</label>
+			<label for="longitude">Longitude:
+			<input type="number" id="longitude" name="longitude" min=-180 max=180 step=0.00001 value=71.0942>
+			</label>
+			<label for="radiusOfPlate">Radius of Plate:
+			<input type="number" id="radiusOfPlate" name="radiusOfPlate" min=1 max=10000 step=0.00001 value=1>
+			</label>
+
+			<input class="astrolabeEccentricCalendarText" id="astrolabeEccentricCalendarSubmit" type="submit" value="Submit">
+		</form>
+	</body>
+</html>

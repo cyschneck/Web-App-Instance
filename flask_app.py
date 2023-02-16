@@ -91,6 +91,43 @@ def render_eot_results():
 
 	return render_template('muller_eot_results.html', plot_eot_url=plot_eot_url, eot_dict=eot_dict)
 
+## astrolabe
+@app.route('/astrolabe', methods=["GET"])
+def render_astrolabe_page():
+	return render_template('astrolabe.html')
+
+def run_astrolabe():
+	# TODO: fix abs path, this currently works with pythonanywhere
+	if "Dropbox" in os.getcwd(): # local
+		plot_astrolabe_url =  "static/img/eot_chart_output.png"
+		retrieve_url = plot_astrolabe_url
+	else: # pythonanywhere
+		plot_astrolabe_url = "/home/cyschneck/mysite/Web-App-Instance/static/img/eot_chart_output.png"
+		retrieve_url = "https://cyschneck.pythonanywhere.com/static/img/eot_chart_output.png"
+
+	return retrieve_url
+
+@app.route('/astrolabe-results', methods=["POST"])
+def render_astrolabe_base_plate_results():
+	for form_value in request.form:
+		if form_value.startswith('astrolabeBasePlate'):
+			obliquity = float(request.form["obliquity"])
+
+	plot_astrolabe_url = run_astrolabe() # TODO
+	return render_template('astrolabe_results.html', plot_astrolabe_url=plot_astrolabe_url)
+
+@app.route('/astrolabe-results', methods=["POST"])
+def render_astrolabe_eccentric_calendar_results():
+	for form_value in request.form:
+		if form_value.startswith('astrolabeEccentricCalendar'):
+			yearToCalculate = float(request.form["yearToCalculate"])
+			longitude = float(request.form["longitude"])
+			radiusOfPlate = float(request.form["radiusOfPlate"])
+
+	plot_astrolabe_url = run_astrolabe() # TODO
+
+	return render_template('astrolabe_results.html', plot_astrolabe_url=plot_astrolabe_url)
+
 # flask app only runs once to avoid running more than once
 if __name__ == "__main__":
 	app.run(debug=True)
