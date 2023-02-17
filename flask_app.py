@@ -96,6 +96,36 @@ def render_eot_results():
 def render_astrolabe_page():
 	return render_template('astrolabe.html')
 
+def determineApside(julian_time):
+	# Define the line of apsides (longitude of aphelion and perihelion)
+	apside_perihelion = 102.937348 + (1.7195269 * julian_time) + (0.00045962 * (julian_time**2)) + (0.000000499 * (julian_time**3))
+	apside_aphelion = apside_perihelion + 180
+	return apside_perihelion, apside_aphelion
+
+def determineEccentrictiyOverTime(julian_time):
+	# Determine the change in eccentricity over time
+	eccentricityAtJulianYear = 0.01670862 - (0.000042037 * julian_time) - (0.0000001236 * (julian_time**2)) + (0.00000000004 * (julian_time**3))
+	return eccentricityAtJulianYear
+
+def determineAngularDistanceEquinox(julian_time, given_longitude, given_aphelion):
+	# Mean Anomaly of January 0
+	mean_anomaly_jan0 = 357.52910 + (35999.0503 * julian_time) - (0.0001559 * (julian_time**2)) - (0.00000048 * (julian_time**3))
+	mean_anomaly_jan0 = mean_anomaly_jan0 % 360 # keep anomaly within 0-360
+
+	# Angular distane from vernal equinox to January 0 (midnight of Dec 31)
+	angular_distance_equinox = given_aphelion + mean_anomaly_jan0 + (given_longitude / 365)
+	angular_distance_equinox = angular_distance_equinox % 360
+	angular_distance_equinox -= 360 # reversed from the original position
+	return angular_distance_equinox
+
+def offsetfromCenterOfPlate(julian_time, radius_of_plate, given_perihelion):
+	# offset from the center of the plate
+	eccentricty = determineEccentrictiyOverTime(julian_time) # 0.01667061
+	offset_eccentricity = 2 *  eccentricty * radius_of_plate
+	x_delta = offset_eccentricity * math.cos(np.deg2rad(given_perihelion))
+	y_delta = offset_eccentricity * math.sin(np.deg2rad(given_perihelion))
+	return x_delta, y_delta
+
 def run_astrolabe():
 	# TODO: fix abs path, this currently works with pythonanywhere
 	if "Dropbox" in os.getcwd(): # local

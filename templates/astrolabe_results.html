@@ -10,8 +10,14 @@
 
 	<div class="row">
 	  <div class="column left">
-		  <p>TESTING: TO BE REPLACED</p>
+			<p>TESTING: TO BE REPLACED</p>
 				<img src="{{ plot_astrolabe_url }}" alt="Astrolabe-Base-Plate" width=100%>
+			<p>Perihelion = {{ perihelion }}</p>
+			<p>Aphelion = {{ aphelion }}</p>
+			<p>Line of Apside relative to Vernal Equinox for Longitude {{ longitude }}° = {{ line_of_apside }}°</p>
+			<p>Offset due to Eccentricity with radius of {{ radius }} = {{ total_offset }}</p>
+			<p>X offset with radius of {{ radius }} = {{ x_offset }}</p>
+			<p>Y offset with radius of {{ radius }} = {{ y_offset }}</p>
 	  </div>
 
 	</div>
