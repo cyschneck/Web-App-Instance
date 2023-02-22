@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request
 import os
+import numpy as np
+import math
 
 app = Flask(__name__, template_folder="templates")
 
@@ -137,26 +139,40 @@ def run_astrolabe():
 
 	return retrieve_url
 
-@app.route('/astrolabe-results', methods=["POST"])
+@app.route('/astrolabe-base-plate-results', methods=["POST"])
 def render_astrolabe_base_plate_results():
-	for form_value in request.form:
-		if form_value.startswith('astrolabeBasePlate'):
-			obliquity = float(request.form["obliquity"])
+	obliquity = float(request.form["obliquity"])
 
 	plot_astrolabe_url = run_astrolabe() # TODO
-	return render_template('astrolabe_results.html', plot_astrolabe_url=plot_astrolabe_url)
+	return render_template('astrolabe_base_plate_results.html', plot_astrolabe_url=plot_astrolabe_url,
+																obliquity=obliquity)
 
-@app.route('/astrolabe-results', methods=["POST"])
+@app.route('/astrolabe-eccentric-calendar-results', methods=["POST"])
 def render_astrolabe_eccentric_calendar_results():
-	for form_value in request.form:
-		if form_value.startswith('astrolabeEccentricCalendar'):
-			yearToCalculate = float(request.form["yearToCalculate"])
-			longitude = float(request.form["longitude"])
-			radiusOfPlate = float(request.form["radiusOfPlate"])
+	yearToCalculate = float(request.form["yearToCalculate"])
+	yearToCalculate = (yearToCalculate - 2000) / 100
+	longitude = float(request.form["longitude"])
+	radiusOfPlate = float(request.form["radiusOfPlate"])
 
-	plot_astrolabe_url = run_astrolabe() # TODO
+	apside_perihelion, apside_aphelion = determineApside(yearToCalculate)
+	vernal_equinox_angle = determineAngularDistanceEquinox(yearToCalculate, longitude, apside_aphelion)
+	x_delta, y_delta = offsetfromCenterOfPlate(yearToCalculate, radiusOfPlate, apside_perihelion)
 
-	return render_template('astrolabe_results.html', plot_astrolabe_url=plot_astrolabe_url)
+	perihelion = round(apside_perihelion, 4)
+	aphelion = round(apside_aphelion, 4)
+	longitude = longitude
+	line_of_apside = round(vernal_equinox_angle, 4)
+	radius = radiusOfPlate
+	x_offset = round(x_delta, 4)
+	y_offset = round(y_delta, 4)
+
+	return render_template('astrolabe_eccentric_calendar_results.html', perihelion=perihelion,
+																		aphelion=aphelion,
+																		longitude=longitude,
+																		line_of_apside=line_of_apside,
+																		radius=radius,
+																		x_offset=x_offset,
+																		y_offset=y_offset)
 
 # flask app only runs once to avoid running more than once
 if __name__ == "__main__":
