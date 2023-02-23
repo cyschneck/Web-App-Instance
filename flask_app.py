@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 import os
 import numpy as np
 import math
+import matplotlib.pyplot as plt
 
 app = Flask(__name__, template_folder="templates")
 
@@ -128,24 +129,67 @@ def offsetfromCenterOfPlate(julian_time, radius_of_plate, given_perihelion):
 	y_delta = offset_eccentricity * math.sin(np.deg2rad(given_perihelion))
 	return x_delta, y_delta
 
+def convertObliquityWithin90(ob_planet):
+	# obliquity converted to be within 0-89.99
+	if ob_planet > 90: # obliquity over 90
+		ob_planet = ob_planet % 90
+	if ob_planet == 90: # Undefined at 90, convert to 89.99
+		ob_planet = 89.99
+	if ob_planet < 0: # negative
+		ob_planet = 360 + ob_planet
+		ob_planet = ob_planet % 90
+	return ob_planet
+
+def radiusOfTropicsAndEquator(base_plate_radius, obliquity_of_planet):
+	# return the radius for all the cirlces on the base plate
+	obliquity_of_planet = convertObliquityWithin90(obliquity_of_planet) # obliquity within 0-89.99
+	outer_tropic_radius = base_plate_radius # on base plate = Tropic of Capricorn
+	equator_radius = base_plate_radius / (math.tan(np.deg2rad(45 + (obliquity_of_planet/2)))) # on base plate = Tropic of Cancer
+	inner_tropic_radius = equator_radius * math.tan(np.deg2rad(45 - (obliquity_of_planet/2)))
+	return outer_tropic_radius, equator_radius, inner_tropic_radius
+
+def constructBasePlate(radius_plate, given_obliquity_planet, given_planet_name, save_local_image):
+	# Construct base plate with concentric circles
+	fig = plt.figure(figsize=(12,12), dpi=100)
+	ax = fig.subplots(subplot_kw={'projection': 'polar'})
+	ax.set_ylim([0,radius_plate]) # set outer limit
+	ax.set_xticklabels([])# remove x labels for degrees
+	ax.set_yticklabels([])
+	ax.set_rticks(np.arange(0, radius_plate, radius_plate/10))
+	ax.grid(True)
+
+	outer_radius, equator_radius, inner_radius = radiusOfTropicsAndEquator(radius_plate, given_obliquity_planet)
+	plt.plot(np.linspace(0, 2*np.pi, 100), np.ones(100)*outer_radius, linewidth=3.5, color='black', label="Outer Radius = {0:.02f}".format(outer_radius))
+	plt.plot(np.linspace(0, 2*np.pi, 100), np.ones(100)*equator_radius, linewidth=3.5, color='black', label="Equator Radius = {0:.02f}".format(equator_radius))
+	plt.plot(np.linspace(0, 2*np.pi, 100), np.ones(100)*inner_radius, linewidth=3.5, color='black', label="Inner Radius = {0:.02f}".format(inner_radius))
+
+	# place legend outside of plot
+	figure_size = ax.get_position()
+	ax.set_position([figure_size.x0, figure_size.y0, figure_size.width * 0.8, figure_size.height]) # shrink horizontally by 20%
+	ax.legend(loc="center left", bbox_to_anchor=(1, 0.5)) # show labels for radius
+
+	plt.title("Base Plate for {0} with Obliquity {1}° for radius = {2}".format(given_planet_name, given_obliquity_planet, radius_plate))
+	fig.savefig("{0}".format(save_local_image), dpi=fig.dpi)
+
 def run_astrolabe():
 	# TODO: fix abs path, this currently works with pythonanywhere
 	if "Dropbox" in os.getcwd(): # local
-		plot_astrolabe_url =  "static/img/eot_chart_output.png"
+		plot_astrolabe_url =  "static/img/astrolabe_base_plate.png"
 		retrieve_url = plot_astrolabe_url
 	else: # pythonanywhere
-		plot_astrolabe_url = "/home/cyschneck/mysite/Web-App-Instance/static/img/eot_chart_output.png"
-		retrieve_url = "https://cyschneck.pythonanywhere.com/static/img/eot_chart_output.png"
+		plot_astrolabe_url = "/home/cyschneck/mysite/Web-App-Instance/static/img/astrolabe_base_plate.png"
+		retrieve_url = "https://cyschneck.pythonanywhere.com/static/img/astrolabe_base_plate.png"
 
 	return retrieve_url
 
 @app.route('/astrolabe-base-plate-results', methods=["POST"])
 def render_astrolabe_base_plate_results():
 	obliquity = float(request.form["obliquity"])
+	radiusOfPlate = float(request.form["radiusOfPlate"])
 
 	plot_astrolabe_url = run_astrolabe() # TODO
-	return render_template('astrolabe_base_plate_results.html', plot_astrolabe_url=plot_astrolabe_url,
-																obliquity=obliquity)
+	constructBasePlate(radiusOfPlate, obliquity, "Planet", plot_astrolabe_url)
+	return render_template('astrolabe_base_plate_results.html', plot_astrolabe_url=plot_astrolabe_url)
 
 @app.route('/astrolabe-eccentric-calendar-results', methods=["POST"])
 def render_astrolabe_eccentric_calendar_results():
