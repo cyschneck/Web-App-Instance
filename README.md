@@ -29,7 +29,7 @@ Options:
 
 **Example Output**
 Output includes: A star chart and a list of all the final positions of stars (declination, right ascension)
-![star_chart](https://raw.githubusercontent.com/cyschneck/Web-App-Instance/main/static/star_chart_output.png)
+![star_chart](https://raw.githubusercontent.com/cyschneck/Web-App-Instance/main/static/img/star_chart_output.png)
 
 ### Generate Graphs for the Equation of Time
 
@@ -42,7 +42,7 @@ Options:
 
 **Example Output**
 Output includes: A EOT graph with a list of the difference in time for each day in the year
-![effect_eot](https://raw.githubusercontent.com/cyschneck/Web-App-Instance/main/static/eot_chart_output.png)
+![effect_eot](https://raw.githubusercontent.com/cyschneck/Web-App-Instance/main/static/img/eot_chart_output.png)
 
 ## TODO
 Fix absolute path link for png files being generated locally vs. pythonanywhere
